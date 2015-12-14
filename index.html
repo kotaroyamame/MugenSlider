@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JSON形式のデータを返すWeb APIを作りたい</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/lib/jquery1.11.3.js"></script>
+    <script src="js/lib/Underscore.js"></script>
+    <script src="js/lib/backbone-min.js"></script>
+    <script src="js/main.js"></script>
+<script>
+  $(function(){
+// jQueryを使用して、読込ボタンがクリックされたら処理を行ないます。
+    $("#load").on("click", function(){
+// Web API（json.php）で生成したjsonデータを取得して処理します。
+      $.ajax({
+                type:'GET',
+                url:'imgjson.php',
+                dataType:'json',
+                success:function(data){
+alert(data.length);
+                    for(var i in data){
+                    $("body").append("<p>"+data[i]+"</p>");
+                    };
+                },
+          error:function(){
+          alert("えらー");
+          }
+            });
+    });
+  });
+</script>
+</head>
+<body>
+    <div class="maintitleBox__backImgWrap">
+    <div class="maintitleBox__backImgWrap__inner">
+        <div class="maintitleBox__backImgWrap__backImg">
+        <img src="img/index.jpg" alt="" />
+        </div>
+    </div>
+    </div>
+    <input type="button" id="load" value="ボタン" />
+</body>
+</html>
