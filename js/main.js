@@ -1,23 +1,10 @@
 window.Slider={};
 
 $(function () {
-
-//    Slider.InfoD=Backbone.Model.extend({
-//        defolt
-//    });
-//    Slider.InfoCollection=Backbone.Collection.extend({
-//        model:Slider.InfoD,
-//        url:'./imgjson.php',
-//        parse:function(data){
-//            return data;
-//        }
-//    });
     Slider.Container=Backbone.View.extend({
         el:'.maintitleBox__backImgWrap__inner',
         initialize:function(){
-            //this.colle=new this.model();
             this.i=0;
-            this.hash=window.location.hash.slice(1);
             var this_=this;
             $.ajax({
                 type:'GET',
@@ -31,12 +18,11 @@ $(function () {
                   }
             });
         },
-        model:Slider.InfoCollection,
-//        template:'<div class="maintitleBox__backImgWrap__backImg" style="display:none;"><img src="<%= src %>" alt="<%= hash %>" /></div>',
         render:function(){
             if(this.i>this.colle.length){
-                this.colle=this.shuffle(this.colle);
                 this.i=0;
+                this.colle=this.shuffle(this.colle);
+                
             };
             var html_ = '<div class="maintitleBox__backImgWrap__backImg" style="display:none;"><img src="img/'+this.colle[this.i % this.colle.length]+'" /></div>'
             this.$el.append(html_);
@@ -66,10 +52,7 @@ $(function () {
         },
         colle:"",
         setcolle:function(data){
-            //this.colle=data;
             this.colle=this.shuffle(data);
-            //this.render();
-           // this.model.setData(data);
         },
         shuffle:function (array) {
               var n = array.length, t, i;
@@ -89,7 +72,6 @@ $(function () {
     Slider.container=new Slider.Container();
     $(window).on('load',function(){
     setInterval('Slider.container.render()',3000);
-    
     });
     
  });
