@@ -1,39 +1,46 @@
 window.Slider={};
+Slider.settings={
+    chengeTime:5*1000,
+    animateSpeed:2*1000
+};
 
 $(function () {
+    Slider.Model1=Backbone.Model.extend({
+        initialize:function(){
+            this.filename=this.get("filename");
+        }
+    });
+    Slider.Coll=Backbone.Collection.extend({
+        url:'./imgjson.php',
+        model:Slider.Model1,
+        parse:function(data){
+		return data;
+	} 
+    });
     Slider.Container=Backbone.View.extend({
         el:'.maintitleBox__backImgWrap__inner',
         initialize:function(){
             this.i=0;
             var this_=this;
-            $.ajax({
-                type:'GET',
-                url:'./imgjson.php',
-                dataType:'json',
-                success:function(data){
-                    this_.setcolle(data);
-                },
-                  error:function(){
-                      alert("えらー");
-                  }
+            this_.collection.fetch({
+                success:function(){
+                    this_.setInt();
+                }
             });
         },
         render:function(){
-            if(this.i>this.colle.length){
-                this.i=0;
-                this.colle=this.shuffle(this.colle);
-                
+            
+            if(this.i==0){
+                this.collection.reset(this.collection.shuffle(), {silent:true});
             };
-            var html_ = '<div class="maintitleBox__backImgWrap__backImg" style="display:none;"><img src="img/'+this.colle[this.i % this.colle.length]+'" /></div>'
+            if(this.i>=this.collection.size()){
+                this.i=0;
+            };
+            var html_ = '<div class="maintitleBox__backImgWrap__backImg" style="display:none;"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'
             this.$el.append(html_);
             this.animate();
             this.i++;
             return this;
-        },
-        success:function(model){
-        },
-        setHash:function(hash){
-            this.hash=hash;
         },
         animate: function(){
             var this_=this;
@@ -43,37 +50,27 @@ $(function () {
             this.$el.find('.maintitleBox__backImgWrap__backImg').css({zIndex:0});
             this.$el.find('.maintitleBox__backImgWrap__backImg').eq(-1)
                 .css({zIndex:1,left:width_+"px",width:width_+"px",display:"block"})
-                .animate({left:0},2000,function(){
+                .animate({left:0},Slider.settings.animateSpeed,function(){
                     if(findImgLen>2){
                         this_.$el.find('.maintitleBox__backImgWrap__backImg').eq(0).remove();
                     };
-
                 });
         },
-        colle:"",
-        setcolle:function(data){
-            this.colle=this.shuffle(data);
+        setInt:function(){
+            var this_=this;
+            this.timer=setInterval(function(){
+                this_.render();
+            },Slider.settings.chengeTime);
         },
-        shuffle:function (array) {
-              var n = array.length, t, i;
-
-              while (n) {
-                i = Math.floor(Math.random() * n--);
-                t = array[n];
-                array[n] = array[i];
-                array[i] = t;
-              }
-
-              return array;
-            }
-
+        close:function(){
+            clearInterval(this.timer);
+        }
     });
     
-    Slider.container=new Slider.Container();
-    $(window).on('load',function(){
-    setInterval('Slider.container.render()',3000);
-    });
-    
+    Slider.coll=new Slider.Coll;
+    Slider.container=new Slider.Container({
+        collection:Slider.coll
+    });    
  });
     
     

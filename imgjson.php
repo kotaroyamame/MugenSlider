@@ -9,7 +9,8 @@ if (! isset($_SERVER['HTTP_X_REQUESTED_WITH']) ||
 		while( ($file = readdir($handle)) !== false ) {
 			if( filetype( $path = $dir . $file ) == "file" ) {
                 if (strpos($file, ".jpg") !== false) {
-				    $imgList[]=$file ;
+                    $model=array("filename"=>$file);
+				    $imgList[]=$model ;
                 }
 			}
 		}
