@@ -18,7 +18,7 @@ $(function () {
 	} 
     });
     Slider.Container=Backbone.View.extend({
-        el:'.backImg__inner',
+        el:'.tilesWrap',
         initialize:function(){
             this.i=0;
             var this_=this;
