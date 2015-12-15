@@ -32,8 +32,7 @@ $(function () {
             
             if(this.i==0){
                 this.collection.reset(this.collection.shuffle(), {silent:true});
-            };
-            if(this.i>=this.collection.size()){
+            }else if(this.i>=this.collection.size()){
                 this.i=0;
             };
             var html_ = '<div class="maintitleBox__backImgWrap__backImg" style="display:none;"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'
@@ -44,15 +43,15 @@ $(function () {
         },
         animate: function(){
             var this_=this;
+            var this_el_find_img=this.$el.find('.maintitleBox__backImgWrap__backImg');
             var slidW=this.$el.width(); 
-            var width_=slidW;
-            var findImgLen=this.$el.find('.maintitleBox__backImgWrap__backImg').length;
-            this.$el.find('.maintitleBox__backImgWrap__backImg').css({zIndex:0});
-            this.$el.find('.maintitleBox__backImgWrap__backImg').eq(-1)
-                .css({zIndex:1,left:width_+"px",width:width_+"px",display:"block"})
+            var findImgLen=this_el_find_img.length;
+            this_el_find_img.css({zIndex:0});
+            this_el_find_img.eq(-1)
+                .css({zIndex:1,left:slidW+"px",width:slidW+"px",display:"block"})
                 .animate({left:0},Slider.settings.animateSpeed,function(){
                     if(findImgLen>2){
-                        this_.$el.find('.maintitleBox__backImgWrap__backImg').eq(0).remove();
+                        this_el_find_img.eq(0).remove();
                     };
                 });
         },
