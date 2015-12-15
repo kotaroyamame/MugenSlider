@@ -1,9 +1,9 @@
-.maintitleBox__backImgWrap__inner{
+.backImg__inner{
 position: relative;
     overflow: hidden;
     width: 100%;
     height: 300px;
 }
-.maintitleBox__backImgWrap__backImg{
+.backImg__inner__img{
 position: absolute;
 }

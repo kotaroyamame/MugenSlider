@@ -18,7 +18,7 @@ $(function () {
 	} 
     });
     Slider.Container=Backbone.View.extend({
-        el:'.maintitleBox__backImgWrap__inner',
+        el:'.backImg__inner',
         initialize:function(){
             this.i=0;
             var this_=this;
@@ -35,7 +35,7 @@ $(function () {
             }else if(this.i>=this.collection.size()){
                 this.i=0;
             };
-            var html_ = '<div class="maintitleBox__backImgWrap__backImg" style="display:none;"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'
+            var html_ = '<div class="backImg__inner__img" style="display:none;"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'
             this.$el.append(html_);
             this.animate();
             this.i++;
@@ -43,7 +43,7 @@ $(function () {
         },
         animate: function(){
             var this_=this;
-            var this_el_find_img=this.$el.find('.maintitleBox__backImgWrap__backImg');
+            var this_el_find_img=this.$el.find('.backImg__inner__img');
             var slidW=this.$el.width(); 
             var findImgLen=this_el_find_img.length;
             this_el_find_img.css({zIndex:0});
