@@ -1,7 +1,8 @@
 window.Slider={};
 Slider.settings={
     chengeTime:5*1000,
-    animateSpeed:2*1000
+    animateSpeed:2*1000,
+    animateVari:3 //0:slideright 1:slidedown 2:fade
 };
 
 $(function () {
@@ -53,16 +54,48 @@ $(function () {
         animate: function(changeBlockNo){
             var this_=this;
             var this_el_find_img=this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner');
-            var slidW=this.$el.find(".tileBlock").width(); 
+            var slidW=this.$el.find(".tileBlock").width();
+            var slidH=this.$el.find(".tileBlock").height(); 
             var findImgLen=this_el_find_img.length;
             this_el_find_img.css({zIndex:0});
-            this_el_find_img.eq(-1)
-                .css({zIndex:1,left:slidW+"px",width:slidW+"px",display:"block"})
-                .animate({left:0},Slider.settings.animateSpeed,function(){
-                    if(findImgLen>2){
-                        this_el_find_img.eq(0).remove();
-                    };
-                });
+            switch(Slider.settings.animateVari){
+                    case 0:
+                        this_el_find_img.eq(-1)
+                            .css({zIndex:1,left:slidW+"px",width:slidW+"px",display:"block"})
+                            .animate({left:0},Slider.settings.animateSpeed,function(){
+                                if(findImgLen>2){
+                                    this_el_find_img.eq(0).remove();
+                                };
+                            });
+                        break;
+                    case 1:
+                        this_el_find_img.eq(-1)
+                            .css({zIndex:1,top:slidH+"px",display:"block"})
+                            .animate({top:0},Slider.settings.animateSpeed,function(){
+                                if(findImgLen>2){
+                                    this_el_find_img.eq(0).remove();
+                                };
+                            });
+                        break;
+                    case 2:
+                        this_el_find_img.eq(-1)
+                            .css({zIndex:1,left:-slidW+"px",width:slidW+"px",display:"block"})
+                            .animate({left:0},Slider.settings.animateSpeed,function(){
+                                if(findImgLen>2){
+                                    this_el_find_img.eq(0).remove();
+                                };
+                            });
+                        break;
+                    case 3:
+                        this_el_find_img.eq(-1)
+                            .css({zIndex:1,top:-slidH+"px",display:"block"})
+                            .animate({top:0},Slider.settings.animateSpeed,function(){
+                                if(findImgLen>2){
+                                    this_el_find_img.eq(0).remove();
+                                };
+                            });
+                        break;
+            };
         },
         setInt:function(){
             var this_=this;
