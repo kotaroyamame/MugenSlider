@@ -21,30 +21,39 @@ $(function () {
         el:'.tilesWrap',
         initialize:function(){
             this.i=0;
+            this.tileBlockLen=this.$el.find(".tileBlock").length;
             var this_=this;
+            
             this_.collection.fetch({
                 success:function(){
                     this_.setInt();
                 }
             });
         },
+        events:{
+            //"load resize":"render"
+        
+        },
         render:function(){
-            
+            var changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
             if(this.i==0){
                 this.collection.reset(this.collection.shuffle(), {silent:true});
             }else if(this.i>=this.collection.size()){
                 this.i=0;
             };
-            var html_ = '<div class="backImg__inner__img" style="display:none;"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'
-            this.$el.append(html_);
-            this.animate();
+            var html_ = '<div class="tileBlock__inner">'+
+                            '<div class="tileBlock__inner__image"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'+
+                            '<div class="tileBlock__inner__caption"><span class="tileBlock__caption__title"></span></div>'+
+                        '</div>'
+            this.$el.find(".tileBlock").eq(changeBlockNo).append(html_);
+            this.animate(changeBlockNo);
             this.i++;
             return this;
         },
-        animate: function(){
+        animate: function(changeBlockNo){
             var this_=this;
-            var this_el_find_img=this.$el.find('.backImg__inner__img');
-            var slidW=this.$el.width(); 
+            var this_el_find_img=this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner');
+            var slidW=this.$el.find(".tileBlock").width(); 
             var findImgLen=this_el_find_img.length;
             this_el_find_img.css({zIndex:0});
             this_el_find_img.eq(-1)

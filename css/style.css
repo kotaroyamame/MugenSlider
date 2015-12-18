@@ -1,9 +1,15 @@
 .tilesWrap{
-    position: relative;
-    overflow: hidden;
+    
     width: 100%;
     height: 100%;
 }
 .tileBlock{
+    width: 50%;
+    height: 200px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+.tileBlock__inner{
     position: absolute;
 }
