@@ -1,6 +1,6 @@
 window.Slider={};
 Slider.settings={
-    chengeTime:5*1000,
+    chengeTime:2*1000,
     animateSpeed:2*1000,
     animateVari:4, //0:slideright 1:slidedown 2:fade
     tileXsize:5,
@@ -26,6 +26,7 @@ $(function () {
             this.i=0;
             this.tileBlockLen=this.$el.find(".tileBlock").length;
             this.timer=false;
+            this.timer2=false;
             var this_=this;
             $(window).on('load',$.proxy(this,'setsize'));
             $(window).on('resize',$.proxy(this,'onresize'));
@@ -40,10 +41,10 @@ $(function () {
 //        },
         onresize:function(){
             var this_=this;
-            if (this.timer !== false) {
-                clearTimeout(this.timer);
+            if (this.timer2 !== false) {
+                clearTimeout(this.timer2);
             }
-            this.timer=setTimeout(function(){
+            this.timer2=setTimeout(function(){
                 this_.setsize();
             },400);       
         },
