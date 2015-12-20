@@ -117,9 +117,11 @@ $(function () {
                             .css({zIndex:0,top:"0px",display:"block"});
                         this_el_find_img.eq(-2)
                             .css({zIndex:2,top:"0px",display:"block"})
+                            .addClass("vib")
                             .animate({top:this_.slidwrapH+"px"},Slider.settings.animateSpeed,function(){
                                 if(findImgLen>1){
                                     this_el_find_img.eq(0).remove();
+                                    this_el_find_img.removeClass("vib");
                                 };
                             });
                         break;

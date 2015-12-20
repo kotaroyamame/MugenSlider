@@ -19,3 +19,20 @@
     width: 100%;
     height: 100%;
 }
+.vib{
+    animation: animation01 1s infinite 0s both;
+}
+@keyframes animation01{
+    0%{
+        transform: rotate3d(0,0,1,0deg);
+    }
+    33%{
+        transform: rotate3d(0,0,1,10deg);
+    }
+    66%{
+        transform: rotate3d(0,0,1,-10deg);
+    }
+    100%{
+        transform: rotate3d(0,0,1,0deg);
+    }
+}
