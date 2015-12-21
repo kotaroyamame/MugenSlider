@@ -166,7 +166,7 @@ $(function () {
                             .css({zIndex:6,top:"0px",display:"block"})
                             .addClass("vib")
                             .animate({top:this_.slidwrapH+50+"px"},Slider.settings.animateSpeed,function(){
-                                while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>1){
+                                while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>2){
                                     this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').eq(0).remove();
                                     this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').removeClass("vib");
                                 };
