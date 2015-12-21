@@ -94,8 +94,9 @@ $(function () {
             if(blockNO==null){
                 do{
                     changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
+                    console.log(this.changeBlockNo+"::"+changeBlockNo);
                 }while(changeBlockNo===this.changeBlockNo);
-                this.changeBlockNo=changeBlockNo;
+                this_.changeBlockNo=changeBlockNo;
             }else{
                 changeBlockNo=blockNO;
             }
