@@ -1,7 +1,7 @@
 window.Slider={};
 Slider.settings={
     chengeTime:1.5*1000,
-    animateSpeed:1*1000,
+    animateSpeed:2*1000,
     animateVari:4, //0:slideright 1:slidedown 2:fade
     tileXsize:2,
     tileYsize:5
@@ -90,9 +90,12 @@ $(function () {
         },
         render:function(blockNO){
             var this_=this;
-            var changeBlockNo
+            var changeBlockNo;
             if(blockNO==null){
-                changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
+                do{
+                    changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
+                }while(changeBlockNo===this.changeBlockNo);
+                this.changeBlockNo=changeBlockNo;
             }else{
                 changeBlockNo=blockNO;
             }
@@ -156,13 +159,13 @@ $(function () {
                             });
                         break;
                     case 4:
-                        this_el_find_img.each(function(index,domEle){
+                        this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').each(function(index,domEle){
                             $(this).css({zIndex:5-index,top:"0px",display:"block"});
                         });
-                        this_el_find_img.eq(0)
+                        this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').eq(0)
                             .css({zIndex:6,top:"0px",display:"block"})
                             .addClass("vib")
-                            .animate({top:this_.slidwrapH+"px"},Slider.settings.animateSpeed,function(){
+                            .animate({top:this_.slidwrapH+50+"px"},Slider.settings.animateSpeed,function(){
                                 while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>1){
                                     this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').eq(0).remove();
                                     this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').removeClass("vib");
