@@ -3,7 +3,7 @@ Slider.settings={
     chengeTime:2*1000,
     animateSpeed:2*1000,
     animateVari:4, //0:slideright 1:slidedown 2:fade
-    tileXsize:5,
+    tileXsize:2,
     tileYsize:5
 };
 
@@ -24,14 +24,16 @@ $(function () {
         el:'.tilesWrap',
         initialize:function(){
             this.i=0;
-            this.tileBlockLen=this.$el.find(".tileBlock").length;
+            //this.tileBlockLen=this.$el.find(".tileBlock").length;
             this.timer=false;
             this.timer2=false;
+            this.tileBlockLen=Slider.settings.tileXsize*Slider.settings.tileYsize;
             var this_=this;
             $(window).on('load',$.proxy(this,'setsize'));
             $(window).on('resize',$.proxy(this,'onresize'));
             this_.collection.fetch({
                 success:function(){
+                    this_.setElements();
                     this_.setInt();
                 }
             });
@@ -49,20 +51,47 @@ $(function () {
             },400);       
         },
         setsize:function(){
-            var this_=this;
-            this.slidW=this_.$el.find(".tileBlock").eq(0).width();  
-            this.slidH=this_.$el.find(".tileBlock").eq(0).height();
             this.slidwrapH=this.$el.height();
+            this.slidwrapW=this.$el.width();
+            console.log(this.slidwrapH+":"+this.slidwrapW);
+            this.slidW=Math.floor(this.slidwrapW/Slider.settings.tileXsize)-2;  
+            this.slidH=Math.floor(this.slidwrapH/Slider.settings.tileYsize)-2;
+            this.slidAspect=this.slidH/this.slidW;
+            this.$el.find(".tileBlock")
+                .css({width:this.slidW+"px",height:this.slidH+"px"});
+        },
+        setElements:function(){
+            var this_=this;
+            
+            var html_="";
+            for(var i=0;i<this.tileBlockLen;i++){
+                var imgH=this_.collection.at(i%this_.collection.size()).get("height");
+                var imgW=this_.collection.at(i%this_.collection.size()).get("width");
+                var covArray=this_.makeCover(imgH,imgW);
+            html_ += '<div class="tileBlock">'+
+                '<div class="tileBlock__inner">'+
+                            '<div class="tileBlock__inner__image"><img src="img/'+this_.collection.at(i%this_.collection.size()).get("filename")+'" style="top:'+covArray.topSlidePX+'px;left:'+covArray.leftSlidePX+'px;width:'+covArray.imgW+'px;height:'+covArray.imgH+'px" /></div>'+
+                            '<div class="tileBlock__inner__caption"><span class="tileBlock__caption__title"></span></div>'+
+                        '</div>'+
+                '</div>'
+            }
+            this.$el.append(html_);
+            this.$el.find(".tileBlock")
+                .css({width:this.slidW+"px",height:this.slidH+"px"});
         },
         render:function(){
+            var this_=this;
             var changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
             if(this.i==0){
                 this.collection.reset(this.collection.shuffle(), {silent:true});
             }else if(this.i>=this.collection.size()){
                 this.i=0;
             };
+            var imgH=this_.collection.at(this.i).get("height");
+            var imgW=this_.collection.at(this.i).get("width");
+            var covArray=this_.makeCover(imgH,imgW);
             var html_ = '<div class="tileBlock__inner">'+
-                            '<div class="tileBlock__inner__image"><img src="img/'+this.collection.at(this.i).get("filename")+'" /></div>'+
+                            '<div class="tileBlock__inner__image"><img src="img/'+this_.collection.at(this.i).get("filename")+'" style="top:'+covArray.topSlidePX+'px;left:'+covArray.leftSlidePX+'px;width:'+covArray.imgW+'px;height:'+covArray.imgH+'px" /></div>'+
                             '<div class="tileBlock__inner__caption"><span class="tileBlock__caption__title"></span></div>'+
                         '</div>'
             this.$el.find(".tileBlock").eq(changeBlockNo).append(html_);
@@ -107,7 +136,7 @@ $(function () {
                         this_el_find_img.eq(-1)
                             .css({zIndex:1,top:-this_.slidH+"px",display:"block"})
                             .animate({top:0},Slider.settings.animateSpeed,function(){
-                                if(findImgLen>2){
+                                if(findImgLen>1){
                                     this_el_find_img.eq(0).remove();
                                 };
                             });
@@ -135,6 +164,23 @@ $(function () {
         },
         removeInt:function(){
             clearInterval(this.timer);
+        },
+        makeCover:function(h,w){
+            var this_=this;
+            var imgAspect=h/w;
+            var leftSlidePX=0,topSlidePX=0,imgH_,imgW_;
+                if(imgAspect<this_.slidAspect){
+                    imgH_=this_.slidH;
+                    imgW_=(1/imgAspect)*this_.slidH;
+                    leftSlidePX= -1*(imgW_-this_.slidW)/2;
+                }else{
+                    imgH_=imgAspect*this_.slidW;
+                    imgW_=this_.slidW;
+                    topSlidePX= -1*(imgH_-this_.slidH)/2;
+                };
+            var covArray={"imgH":imgH_,"imgW":imgW_,"topSlidePX":topSlidePX,"leftSlidePX":leftSlidePX};
+            return covArray;
+        
         }
     });
     
