@@ -11,6 +11,8 @@ $(function () {
     Slider.Model1=Backbone.Model.extend({
         initialize:function(){
             this.filename=this.get("filename");
+            this.width=this.get("width");
+            this.height=this.get("height");
         }
     });
     Slider.Coll=Backbone.Collection.extend({
@@ -38,9 +40,12 @@ $(function () {
                 }
             });
         },
-//        events:{
-//            "resize .tilesWrap":"onResize"
-//        },
+        events:{
+            "click .tileBlock":"onclick"
+        },
+        onclick:function(e){
+            console.log(e);
+        },
         onresize:function(){
             var this_=this;
             if (this.timer2 !== false) {
@@ -75,7 +80,7 @@ $(function () {
                         '</div>'+
                 '</div>'
             }
-            this.$el.append(html_);
+            this.$el.html(html_);
             this.$el.find(".tileBlock")
                 .css({width:this.slidW+"px",height:this.slidH+"px"});
         },
@@ -148,9 +153,9 @@ $(function () {
                             .css({zIndex:2,top:"0px",display:"block"})
                             .addClass("vib")
                             .animate({top:this_.slidwrapH+"px"},Slider.settings.animateSpeed,function(){
-                                if(findImgLen>1){
-                                    this_el_find_img.eq(0).remove();
-                                    this_el_find_img.removeClass("vib");
+                                while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>1){
+                                    this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').eq(0).remove();
+                                    this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').removeClass("vib");
                                 };
                             });
                         break;
