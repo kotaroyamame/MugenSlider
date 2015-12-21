@@ -31,6 +31,8 @@
 }
 .vib{
     animation: animation01 1s infinite 0s both;
+    -webkit-animation: animation01 1s infinite 0s both;
+    -moz-animation: animation01 1s infinite 0s both;
 }
 @keyframes animation01{
     0%{

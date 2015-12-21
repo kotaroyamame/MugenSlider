@@ -1,7 +1,7 @@
 window.Slider={};
 Slider.settings={
-    chengeTime:2*1000,
-    animateSpeed:2*1000,
+    chengeTime:1.5*1000,
+    animateSpeed:1*1000,
     animateVari:4, //0:slideright 1:slidedown 2:fade
     tileXsize:2,
     tileYsize:5
@@ -83,6 +83,7 @@ $(function () {
             this.$el.html(html_);
             this.$el.find(".tileBlock")
                 .css({width:this.slidW+"px",height:this.slidH+"px"});
+            this.$el.find(".tileBlock").unbind();
             this.$el.find(".tileBlock").on('click',function(){
                 this_.onclick(this);
             });
@@ -155,10 +156,11 @@ $(function () {
                             });
                         break;
                     case 4:
-                        this_el_find_img.eq(-1)
-                            .css({zIndex:0,top:"0px",display:"block"});
-                        this_el_find_img.eq(-2)
-                            .css({zIndex:2,top:"0px",display:"block"})
+                        this_el_find_img.each(function(index,domEle){
+                            $(this).css({zIndex:5-index,top:"0px",display:"block"});
+                        });
+                        this_el_find_img.eq(0)
+                            .css({zIndex:6,top:"0px",display:"block"})
                             .addClass("vib")
                             .animate({top:this_.slidwrapH+"px"},Slider.settings.animateSpeed,function(){
                                 while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>1){
