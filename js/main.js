@@ -44,7 +44,7 @@ $(function () {
 //            "click .tileBlock":"onclick"
 //        },
         onclick:function(e){
-            console.log(this.$el.find(".tileBlock").index(e));
+            this.render(this.$el.find(".tileBlock").index(e));
         },
         onresize:function(){
             var this_=this;
@@ -87,9 +87,14 @@ $(function () {
                 this_.onclick(this);
             });
         },
-        render:function(){
+        render:function(blockNO){
             var this_=this;
-            var changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
+            var changeBlockNo
+            if(blockNO==null){
+                changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
+            }else{
+                changeBlockNo=blockNO;
+            }
             if(this.i==0){
                 this.collection.reset(this.collection.shuffle(), {silent:true});
             }else if(this.i>=this.collection.size()){
