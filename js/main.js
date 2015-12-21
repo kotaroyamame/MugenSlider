@@ -40,11 +40,11 @@ $(function () {
                 }
             });
         },
-        events:{
-            "click .tileBlock":"onclick"
-        },
+//        events:{
+//            "click .tileBlock":"onclick"
+//        },
         onclick:function(e){
-            console.log(e);
+            console.log(this.$el.find(".tileBlock").index(e));
         },
         onresize:function(){
             var this_=this;
@@ -83,6 +83,9 @@ $(function () {
             this.$el.html(html_);
             this.$el.find(".tileBlock")
                 .css({width:this.slidW+"px",height:this.slidH+"px"});
+            this.$el.find(".tileBlock").on('click',function(){
+                this_.onclick(this);
+            });
         },
         render:function(){
             var this_=this;
