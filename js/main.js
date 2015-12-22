@@ -121,9 +121,9 @@ $(function () {
             var this_=this;
             var this_el_find_img=this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner');
             var findImgLen=this_el_find_img.length;
-            this_el_find_img.css({zIndex:0});
             switch(Slider.settings.animateVari){
                     case 0:
+                        this_el_find_img.css({zIndex:0});
                         this_el_find_img.eq(-1)
                             .css({zIndex:1,left:this_.slidW+"px",width:this_.slidW+"px",display:"block"})
                             .animate({left:0},Slider.settings.animateSpeed,function(){
@@ -133,6 +133,7 @@ $(function () {
                             });
                         break;
                     case 1:
+                        this_el_find_img.css({zIndex:0});
                         this_el_find_img.eq(-1)
                             .css({zIndex:1,top:this_.slidH+"px",display:"block"})
                             .animate({top:0},Slider.settings.animateSpeed,function(){
@@ -142,6 +143,7 @@ $(function () {
                             });
                         break;
                     case 2:
+                        this_el_find_img.css({zIndex:0});
                         this_el_find_img.eq(-1)
                             .css({zIndex:1,left:-this_.slidW+"px",width:this_.slidW+"px",display:"block"})
                             .animate({left:0},Slider.settings.animateSpeed,function(){
@@ -151,6 +153,7 @@ $(function () {
                             });
                         break;
                     case 3:
+                        this_el_find_img.css({zIndex:0});
                         this_el_find_img.eq(-1)
                             .css({zIndex:1,top:-this_.slidH+"px",display:"block"})
                             .animate({top:0},Slider.settings.animateSpeed,function(){
