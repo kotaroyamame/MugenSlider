@@ -2,7 +2,7 @@ window.Slider={};
 Slider.settings={
     chengeTime:1.5*1000,
     animateSpeed:2*1000,
-    animateVari:4, //0:slideright 1:slidedown 2:fade
+    animateVari:5, //0:slideright 1:slidedown 2:slideleft 3:slideup 4:dropdown 5:fade
     tileXsize:2,
     tileYsize:5
 };
@@ -67,8 +67,8 @@ $(function () {
         },
         setElements:function(){
             var this_=this;
-            
             var html_="";
+            var this_el_find_tileBlock=this.$el.find(".tileBlock");
             for(var i=0;i<this.tileBlockLen;i++){
                 var imgH=this_.collection.at(i%this_.collection.size()).get("height");
                 var imgW=this_.collection.at(i%this_.collection.size()).get("width");
@@ -81,6 +81,26 @@ $(function () {
                 '</div>'
             }
             this.$el.html(html_);
+            switch(Slider.settings.animateVari){
+                    case 0:
+                    this_el_find_tileBlock.css({overflow:"hidden"});
+                        break;
+                    case 1:
+                    this_el_find_tileBlock.css({overflow:"hidden"});
+                        break;
+                    case 2:
+                    this_el_find_tileBlock.css({overflow:"hidden"});
+                        break;
+                    case 3:
+                    this_el_find_tileBlock.css({overflow:"hidden"});
+                        break;
+                    case 4:
+                    this_el_find_tileBlock.css({overflow:"visible"});
+                        break;
+                    case 5:
+                    this_el_find_tileBlock.css({overflow:"hidden"});
+                        break;
+            };
             this.$el.find(".tileBlock")
                 .css({width:this.slidW+"px",height:this.slidH+"px"});
             this.$el.find(".tileBlock").unbind();
@@ -119,6 +139,7 @@ $(function () {
         },
         animate: function(changeBlockNo){
             var this_=this;
+            var this_el_find_tileBlock=this.$el.find(".tileBlock");
             var this_el_find_img=this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner');
             var findImgLen=this_el_find_img.length;
             switch(Slider.settings.animateVari){
@@ -176,6 +197,16 @@ $(function () {
                                 };
                             });
                         break;
+                    case 5:
+                    this_el_find_img.css({zIndex:0});
+                        this_el_find_img.eq(-1)
+                            .css({zIndex:1,left:"0px",opacity:0,width:this_.slidW+"px",display:"block"})
+                            .animate({opacity:1},Slider.settings.animateSpeed,function(){
+                                if(findImgLen>1){
+                                    this_el_find_img.eq(0).remove();
+                                };
+                            });
+                    break;
             };
         },
         setInt:function(){
