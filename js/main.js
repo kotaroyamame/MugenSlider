@@ -2,7 +2,7 @@ window.Slider={};
 Slider.settings={
     chengeTime:1.5*1000,
     animateSpeed:2*1000,
-    animateVari:5, //0:slideright 1:slidedown 2:slideleft 3:slideup 4:dropdown 5:fade
+    animateVari:4, //0:slideright 1:slidedown 2:slideleft 3:slideup 4:dropdown 5:fade
     tileXsize:2,
     tileYsize:5
 };
