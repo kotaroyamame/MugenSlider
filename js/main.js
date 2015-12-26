@@ -58,7 +58,7 @@ $(function () {
         setsize:function(){
             this.slidwrapH=this.$el.height();
             this.slidwrapW=this.$el.width();
-            console.log(this.slidwrapH+":"+this.slidwrapW);
+            //console.log(this.slidwrapH+":"+this.slidwrapW);
             this.slidW=Math.floor(this.slidwrapW/Slider.settings.tileXsize)-2;  
             this.slidH=Math.floor(this.slidwrapH/Slider.settings.tileYsize)-2;
             this.slidAspect=this.slidH/this.slidW;
@@ -114,7 +114,7 @@ $(function () {
             if(blockNO==null){
                 do{
                     changeBlockNo=Math.floor(Math.random()*this.tileBlockLen);
-                    console.log(this.changeBlockNo+"::"+changeBlockNo);
+                    //console.log(this.changeBlockNo+"::"+changeBlockNo);
                 }while(changeBlockNo===this.changeBlockNo);
                 this_.changeBlockNo=changeBlockNo;
             }else{
