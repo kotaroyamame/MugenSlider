@@ -126,16 +126,18 @@ $(function () {
             }else if(this.i>=this.collection.size()){
                 this.i=0;
             };
-            var imgH=this_.collection.at(this.i).get("height");
-            var imgW=this_.collection.at(this.i).get("width");
-            var covArray=this_.makeCover(imgH,imgW);
-            var html_ = '<div class="tileBlock__inner">'+
-                            '<div class="tileBlock__inner__image"><img src="img/'+this_.collection.at(this.i).get("filename")+'" style="top:'+covArray.topSlidePX+'px;left:'+covArray.leftSlidePX+'px;width:'+covArray.imgW+'px;height:'+covArray.imgH+'px" /></div>'+
-                            '<div class="tileBlock__inner__caption"><span class="tileBlock__caption__title"></span></div>'+
-                        '</div>'
-            this.$el.find(".tileBlock").eq(changeBlockNo).append(html_);
+            do{
+                var imgH=this_.collection.at(this.i).get("height");
+                var imgW=this_.collection.at(this.i).get("width");
+                var covArray=this_.makeCover(imgH,imgW);
+                var html_ = '<div class="tileBlock__inner">'+
+                                '<div class="tileBlock__inner__image"><img src="img/'+this_.collection.at(this.i).get("filename")+'" style="top:'+covArray.topSlidePX+'px;left:'+covArray.leftSlidePX+'px;width:'+covArray.imgW+'px;height:'+covArray.imgH+'px" /></div>'+
+                                '<div class="tileBlock__inner__caption"><span class="tileBlock__caption__title"></span></div>'+
+                            '</div>'
+                this.$el.find(".tileBlock").eq(changeBlockNo).append(html_);
+                this.i++;
+            }while(this.$el.find(".tileBlock").eq(changeBlockNo).find(".tileBlock__inner").not(".vib").length<3);
             this.animate(changeBlockNo);
-            this.i++;
             return this;
         },
         animate: function(changeBlockNo){
