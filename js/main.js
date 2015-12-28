@@ -68,12 +68,33 @@ $(function () {
         setElements:function(){
             var this_=this;
             var html_="";
-            var this_el_find_tileBlock=this.$el.find(".tileBlock");
+            
+            var overflowValue;
+            switch(Slider.settings.animateVari){
+                    case 0:
+                    overflowValue="hidden";
+                        break;
+                    case 1:
+                    overflowValue="hidden";
+                        break;
+                    case 2:
+                    overflowValue="hidden";
+                        break;
+                    case 3:
+                    overflowValue="hidden";
+                        break;
+                    case 4:
+                    overflowValue="visible";
+                        break;
+                    case 5:
+                    overflowValue="hidden";
+                        break;
+            };
             for(var i=0;i<this.tileBlockLen;i++){
                 var imgH=this_.collection.at(i%this_.collection.size()).get("height");
                 var imgW=this_.collection.at(i%this_.collection.size()).get("width");
                 var covArray=this_.makeCover(imgH,imgW);
-            html_ += '<div class="tileBlock">'+
+            html_ += '<div class="tileBlock" style="overflow:'+overflowValue+';">'+
                 '<div class="tileBlock__inner">'+
                             '<div class="tileBlock__inner__image"><img src="img/'+this_.collection.at(i%this_.collection.size()).get("filename")+'" style="top:'+covArray.topSlidePX+'px;left:'+covArray.leftSlidePX+'px;width:'+covArray.imgW+'px;height:'+covArray.imgH+'px" /></div>'+
                             '<div class="tileBlock__inner__caption"><span class="tileBlock__caption__title"></span></div>'+
@@ -81,26 +102,6 @@ $(function () {
                 '</div>'
             }
             this.$el.html(html_);
-            switch(Slider.settings.animateVari){
-                    case 0:
-                    this_el_find_tileBlock.css({overflow:"hidden"});
-                        break;
-                    case 1:
-                    this_el_find_tileBlock.css({overflow:"hidden"});
-                        break;
-                    case 2:
-                    this_el_find_tileBlock.css({overflow:"hidden"});
-                        break;
-                    case 3:
-                    this_el_find_tileBlock.css({overflow:"hidden"});
-                        break;
-                    case 4:
-                    this_el_find_tileBlock.css({overflow:"visible"});
-                        break;
-                    case 5:
-                    this_el_find_tileBlock.css({overflow:"hidden"});
-                        break;
-            };
             this.$el.find(".tileBlock")
                 .css({width:this.slidW+"px",height:this.slidH+"px"});
             this.$el.find(".tileBlock").unbind();
@@ -140,7 +141,7 @@ $(function () {
         animate: function(changeBlockNo){
             var this_=this;
             var this_el_find_tileBlock=this.$el.find(".tileBlock");
-            var this_el_find_img=this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner');
+            var this_el_find_img=this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').not('.vib');
             var findImgLen=this_el_find_img.length;
             switch(Slider.settings.animateVari){
                     case 0:
@@ -184,16 +185,15 @@ $(function () {
                             });
                         break;
                     case 4:
-                        this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').each(function(index,domEle){
+                        this_el_find_img.each(function(index,domEle){
                             $(this).css({zIndex:5-index,top:"0px",display:"block"});
                         });
-                        this.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').eq(0)
+                        this_el_find_img.eq(0)
                             .css({zIndex:6,top:"0px",display:"block"})
                             .addClass("vib")
-                            .animate({top:this_.slidwrapH+50+"px"},Slider.settings.animateSpeed,function(){
-                                while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>2){
-                                    this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').eq(0).remove();
-                                    this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').removeClass("vib");
+                            .animate({top:this_.slidwrapH+300+"px"},Slider.settings.animateSpeed,function(){
+ while(this_.$el.find(".tileBlock").eq(changeBlockNo).find('.tileBlock__inner').length>3){
+                                    this_.$el.find(".tileBlock").eq(changeBlockNo).find('.vib').remove();
                                 };
                             });
                         break;
