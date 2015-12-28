@@ -3,7 +3,7 @@ Slider.settings={
     chengeTime:1.5*1000,
     animateSpeed:2*1000,
     animateVari:4, //0:slideright 1:slidedown 2:slideleft 3:slideup 4:dropdown 5:fade
-    tileXsize:2,
+    tileXsize:3,
     tileYsize:5
 };
 
@@ -121,12 +121,13 @@ $(function () {
             }else{
                 changeBlockNo=blockNO;
             }
+             do{
             if(this.i==0){
                 this.collection.reset(this.collection.shuffle(), {silent:true});
             }else if(this.i>=this.collection.size()){
                 this.i=0;
             };
-            do{
+           
                 var imgH=this_.collection.at(this.i).get("height");
                 var imgW=this_.collection.at(this.i).get("width");
                 var covArray=this_.makeCover(imgH,imgW);
